@@ -1,39 +1,57 @@
-"use client"
-import Image from 'next/image'
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const Page = () => {
-  const router = useRouter()
- const [roomId, setroomId] = useState("")
+export default function Home() {
+  const [roomId, setRoomId] = useState("");
+  const router = useRouter();
+
   const handleCreateRoom = () => {
     const newRoom = `room-${Math.random().toString(36).substring(7)}`;
     router.push(`/room/${newRoom}`);
   };
-  return (
-   <div className=' w-full h-full bg-black overflow-hidden'>
-     <div className=' flex items-center justify-center max-w-screen-xl flex-col space-y-6 mx-auto h-screen'>
-      <div className=' max-w-screen-xl mx-auto flex items-center flex-col justify-center relative z-20'>
-        <h1 className='lg:text-[130px]  font-bold text-transparent bg-clip-text bg-gradient-to-r font-serif from-purple-500 to-purple-400 z-20'>LoveTunes</h1>
-        <p className='lg:text-2xl text-sm font-bold text-white text-center'>Where Love and Music Sync</p>
-        <Image src="/heart.png" alt="music" width={100} height={100} className='absolute -top-8 -right-20 animate-pulse' />
-        <div className='absolute -bottom-8 -left-20  bg-gradient-to-r from-orange-100 to-yellow-100 w-[700px] 
-        h-[700px] rounded-full blur-3xl opacity-30 '></div>
-        <div className='absolute -top-8 -right-40  bg-gradient-to-r from-pink-100 to-red-100 w-[500px] 
-        h-[500px] rounded-full blur-3xl opacity-30 '></div>
-      </div>
-     <div className='flex items-center flex-col space-y-6' >
-     <button className='bg-gradient-to-r px-10 w-full from-purple-500 z-30 to-purple-700
-      text-white  py-3 rounded' onClick={handleCreateRoom}>Create a room</button>
-    <div className='flex items-center flex-col space-y-4 z-30'>
-    <input  type="text" onChange={(e) => setroomId(e.target.value)} value={roomId} placeholder='Enter room code' className='border border-gray-300 rounded px-3 py-2 ml-4 w-full' />
-    <button className='bg-gradient-to-r px-10 from-purple-500 to-purple-700
-      text-white  py-3 rounded' onClick={() => router.push(`/room/${roomId}`)} >Join a room</button>
-    </div>
-     </div>
-    </div>
-   </div>
-  )
-}
 
-export default Page
+  const handleJoinRoom = () => {
+    if (roomId.trim() !== "") router.push(`/room/${roomId}`);
+  };
+
+  return (
+    <main className="min-h-screen bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center px-4">
+      <div className="text-center space-y-8 max-w-md w-full">
+        <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow">LoveTunes</h1>
+        <p className="text-white text-lg">Create or join a room to sync music with friends</p>
+
+        {/* Create Room Card */}
+        <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-xl space-y-4">
+          <h2 className="text-white text-xl font-semibold">Start a New Vibe</h2>
+          <p className="text-white/80 text-sm">Create a room and share the code with friends</p>
+          <button
+            className="w-full py-2 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-lg transition"
+            onClick={handleCreateRoom}
+          >
+            🌟 Create Room
+          </button>
+        </div>
+
+        {/* Join Room Card */}
+        <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-xl space-y-4">
+          <h2 className="text-white text-xl font-semibold">Join a Room</h2>
+          <p className="text-white/80 text-sm">Enter a room code to join friends</p>
+          <input
+            type="text"
+            value={roomId}
+            onChange={(e) => setRoomId(e.target.value)}
+            placeholder="Enter room code"
+            className="w-full py-2 px-4 rounded-lg bg-white/20 text-white placeholder-white/60 outline-none"
+          />
+          <button
+            className="w-full py-2 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-lg transition"
+            onClick={handleJoinRoom}
+          >
+            🎵 Join Room
+          </button>
+        </div>
+      </div>
+    </main>
+  );
+}
