@@ -5,3 +5,23 @@
 .fancy-border {
   border-radius: 49% 51% 71% 29% / 39% 56% 44% 61% ;
 }
+
+
+@keyframes sakuraFloat {
+  0% {
+    transform: translateY(-10%) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110%) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-sakura {
+  animation-name: sakuraFloat;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  font-size: 1.5rem;
+  position: absolute;
+}
