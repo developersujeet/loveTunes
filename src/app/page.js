@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -15,9 +15,30 @@ export default function Home() {
     if (roomId.trim() !== "") router.push(`/room/${roomId}`);
   };
 
+  // Sakura generator
+  useEffect(() => {
+    const count = 10;
+    const root = document.querySelector("#sakura");
+    if (!root) return;
+
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement("div");
+      el.className = "absolute animate-sakura";
+      el.style.left = `${Math.random() * 100}%`;
+      el.style.animationDelay = `${Math.random() * 5}s`;
+      el.style.animationDuration = `${6 + Math.random() * 6}s`;
+      el.textContent = "🌸";
+      root.appendChild(el);
+    }
+  }, []);
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center px-4">
-      <div className="text-center space-y-8 max-w-md w-full">
+    <main className="relative min-h-screen bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center px-4">
+      {/* Sakura Layer */}
+      <div id="sakura" className="absolute inset-0 overflow-hidden pointer-events-none z-0" />
+
+      {/* Main Content */}
+      <div className="z-10 text-center space-y-8 max-w-md w-full">
         <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow">LoveTunes</h1>
         <p className="text-white text-lg">Create or join a room to sync music with friends</p>
 
